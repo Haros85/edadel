@@ -1,0 +1,14 @@
+{% extends "base.html" %} 
+{% block title %} Ошибка 500 {% endblock %}
+{% block content %}
+{% load static %}
+<div class="main__header">
+    <h1 class="main__title">Ошибка на сервере...</h1>
+</div>
+<div class="custom-center-block">
+    <p class="tags__label">Перейдите на главную и больше не шалите!</p>
+    <div class="custom-button-block">
+        <a href="{% url 'index' %}" class="button button_style_blue">Перейти на главную</a>
+    </div>
+</div>
+{% endblock %}

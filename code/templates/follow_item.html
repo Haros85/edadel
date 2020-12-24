@@ -1,0 +1,28 @@
+{% load recipe_filters %}
+<div class="card-user" data-author="{{ fw.author.pk }}">
+    <div class="card-user__header">
+        <h2 class="card-user__title">{{ fw.author.get_full_name }}</h2>
+    </div>
+    <div class="card-user__body">
+        <ul class="card-user__items">
+            {% for recipe in request|last_recipes:fw.author.pk %}
+            <li class="card-user__item">
+                <div class="recipe">
+                    {% load thumbnail %}
+                    {% thumbnail recipe.image "72x72" crop="center" as im %}
+                    <img src="{{ im.url }}" alt="{{ recipe.title }}" class="recipe__image">
+                    {% endthumbnail %}
+                    <h3 class="recipe__title">{{ recipe.title }}</h3>
+                    <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} {{ recipe.unit_of_time.reduction }}</p>
+                </div>
+            </li>
+            {% endfor %}
+            <li class="card-user__item">
+                <a href="{% url 'profile' fw.author.username %}" class="card-user__link link">{{ request|count_recipes:fw.author.pk }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-user__footer">
+        <button class="button button_style_light-blue button_size_auto" name="subscribe">Отписаться</button>
+    </div>
+</div>

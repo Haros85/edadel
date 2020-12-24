@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title%} Избранное {% endblock%}
+    {% load static %}
+    {% block favorites %} <li class="nav__item nav__item_active"> {% endblock %}
+    {% csrf_token %}
+    {% block static %}
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+    {% endblock %}
+    {% load recipe_filters %}
+    {% block content %}
+    <div class="main__header">
+        <h1 class="main__title">Избранное</h1>
+        <ul class="tags">
+            {% for tag in tags %}
+                <li class="tags__item">
+                    <a
+                        id="{{ tag.pk }}"
+                        class="tags__checkbox tags__checkbox_style_{{ tag.color }} {% if tag.value in request.GET|get_filter_values %} tags__checkbox_active {% endif %}"
+                        href="{% url 'favor_view' %}?{{ request|get_filter_link:tag }}"></a>
+                    <span class="tags__label">{{ tag.title }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="card-list">
+        {% for recipe in page %}
+            {% include 'favor_item.html' %}
+        {% endfor %}
+    </div>
+    {% if page.has_next or page.has_previous %}
+        {% include 'pagination.html' %}
+    {% endif %}
+    <script src="{% static 'js/config/config.js' %}"></script>
+    <script src="{% static 'js/components/MainCards.js' %}"></script>
+    <script src="{% static 'js/components/Favorites.js' %}"></script>
+    <script src="{% static 'js/components/Purchases.js' %}"></script>
+    <script src="{% static 'js/components/CardList.js' %}"></script>
+    <script src="{% static 'js/components/Header.js' %}"></script>
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    <script src="{% static 'js/project/favorite.js' %}"></script>
+{% endblock %} 

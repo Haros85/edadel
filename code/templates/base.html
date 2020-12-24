@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        {% load static %}
+        {% load recipe_filters %}
+        {% csrf_token %}
+        {% block static %}
+        <link rel="stylesheet" href={% static 'pages/form.css' %}>
+        {% endblock %}
+        <title>{% block title%}Регистрация{% endblock%} | едадел</title>
+    </head>
+    <body>
+        <header class="header">
+            <nav class="nav">
+                <div class="nav__container container">
+                    {% if user.is_authenticated %}
+                    <ul class="nav__items list">
+                        {% block index %}<li class="nav__item">{% endblock %}<a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+                        {% block subs %}<li class="nav__item">{% endblock %}<a href="{% url 'follow_view' %}" class="nav__link link">Мои подписки</a></li>
+                        {% block new_recipe %}<li class="nav__item">{% endblock %}<a href="{% url 'new_recipe' %}" class="nav__link link">Создать рецепт</a></li>
+                        {% block favorites %}<li class="nav__item">{% endblock %}<a href="{% url 'favor_view' %}" class="nav__link link">Избранное</a></li>
+                        {% block shop %}<li class="nav__item">{% endblock %}<a href="{% url 'shop-list' %}" class="nav__link link">Список покупок {{ count }}</a>
+                        <span  class="badge badge_style_sl nav__badge" id="counter">{{ request|count_list }}</span></li>
+                    </ul>
+                    <ul class="nav__items list">
+                        {% block profile_edit %}<li class="nav__item">{% endblock %}<a href="{% url 'profile_edit' %}" class="nav__link link">Профиль</a></li>
+                        {% block pass_change %}<li class="nav__item">{% endblock %}<a href="{% url 'password_change' %}" class="nav__link link">Изменить пароль</a></li>
+                        <li class="nav__item"><a href="{% url 'logout'%}" class="nav__link link">Выход</a></li>
+                    </ul>
+                    {% else %}
+                    <ul class="nav__items list">
+                        <li class="nav__item nav__item_active"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+                    </ul>
+                    <ul class="nav__items list">
+                        {% block login %}<li class="nav__item">{% endblock %}<a href="{% url 'login'%}" class="nav__link link">Войти</a></li>
+                        {% block create_acc %}<li class="nav__item">{% endblock %}<a href="{% url 'signup' %}" class="button button_style_blue">Создать аккаунт</a></li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        <main class="main container">
+            <div class="container">
+                {% block content %}
+                <!-- Содержимое страницы -->
+                {% endblock content %}
+            </div>
+        </main>
+        {% include 'footer.html' %}
+    </body>
+</html>

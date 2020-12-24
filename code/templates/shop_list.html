@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %} Список покупок{% endblock %}
+{% load static %}
+{% block static %}
+<link rel="stylesheet" href="{% static 'pages/shopList.css' %}">
+{% endblock %}
+{% block shop %}<li class="nav__item nav__item_active">{% endblock %}
+{% block content %}
+    <div class="main__header">
+        <h1 class="main__title">Список покупок</h1>
+    </div>
+    <div class="card-list card-list_column">
+        <ul class="shopping-list">
+            {% for litem in page %}
+            <li class="shopping-list__item" data-id="{{ litem.recipe.pk }}">
+                <div class="recipe recipe_reverse">
+                    {% load thumbnail %}
+                    {% thumbnail litem.recipe.image "90x90" crop="center" as im %}
+                    <img src="{{ im.url }}" alt="{{ litem.recipe.title }}" class="recipe__image recipe__image_big">
+                    {% endthumbnail %}
+                    <h3 class="recipe__title">{{ litem.recipe.title }}</h3>
+                    <p class="recipe__text"><span class="icon-time"></span> {{ litem.recipe.cooking_time }} {{ litem.recipe.unit_of_time.reduction }}</p>
+                </div>
+                <a class="shopping-list__button link" style="cursor: pointer">Удалить</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <p style="padding: 0 0 2em 0;"><a href="{% url 'download' %}"><button class="button button_style_blue">Скачать список</button></a></p>
+<script src="{% static 'js/config/config.js' %}"></script>
+<script src="{% static 'js/components/Header.js' %}"></script>
+<script src="{% static 'js/components/ShopList.js' %}"></script>
+<script src="{% static 'js/api/Api.js' %}"></script>
+<script src="{% static 'js/project/shopList.js' %}"></script>
+{% endblock %}

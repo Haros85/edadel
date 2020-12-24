@@ -1,0 +1,50 @@
+{% load recipe_filters %}
+<div class="card-recipe" data-id="{{ litem.recipe.pk }}">
+    <div class="card-recipe__header">
+        <h2 class="card-recipe__title">{{ litem.recipe.title }}</h2>
+    </div>
+    <div class="card-recipe__body">
+        <ul class="card-recipe__items">
+            {% for ing in litem.recipe.amountingredients_set.all|slice:"0:3" %}
+                <li class="card-recipe__item">
+                {% if ing.amount != 0 %}
+                    <h3 class="card-recipe__ing">{{ ing.ingredient.title }} - {{ ing.amount }} {{ ing.ingredient.unit }}</h3>
+                {% else %}
+                    <h3 class="card-recipe__ing">{{ ing.ingredient.title }} - по вкусу</h3>
+                {% endif %}
+                </li>
+            {% endfor %}
+            <li class="card-recipe__item">
+                <a id="myBtn" data-modal="myModal{{ litem.recipe.id }}" class="myBtn card-recipe__link link">Все ингредиенты</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-recipe__footer">
+        <button class="button button_style_light-blue button_size_auto dont_buy" name="subscribe">Не покупать</button>
+    </div>
+</div>
+
+<div class="modal" id="myModal{{ litem.recipe.id }}">
+    <div class="modal-content">
+        <span class="close" data-modal="myModal{{ litem.recipe.id }}">&times;</span>
+        <div class="single-card">
+            <div class="single-card__info">
+                <div class="single-card__header-info">
+                    <h1 class="single-card__title"> {{ litem.recipe.title }} </h1>
+                </div>
+                <div class="single-card__section">
+                    <h3 class="single-card__section-title">Ингредиенты:</h3>
+                    <div class="single-card__items single-card__items_column">
+                        {% for ing in litem.recipe.amountingredients_set.all %}
+                        {% if ing.amount != 0 %}
+                        <p class=" single-card__section-item">{{ ing.ingredient.title }} - {{ ing.amount }} {{ ing.ingredient.unit }}</p>
+                        {% else %}
+                        <p class=" single-card__section-item">{{ ing.ingredient.title }} - по вкусу</p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

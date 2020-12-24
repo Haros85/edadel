@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title%} Мои подписки {% endblock%}
+    {% load static %}
+    {% csrf_token %}
+    {% block static %}
+    <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
+    {% endblock %}
+    {% block subs %}<li class="nav__item nav__item_active">{% endblock %}
+    {% load recipe_filters %}
+    {% block content %}
+    <div class="main__header">
+        <h1 class="main__title">Мои подписки</h1>
+    </div>
+    <div class="card-list">
+        {% for fw in page %}
+        {% include 'follow_item.html' %}
+        {% endfor %}
+    </div>
+    {% if page.has_next or page.has_previous %}
+        {% include 'pagination.html' %}
+    {% endif %}
+    <script src="{% static '/js/config/config.js' %}"></script>
+    <script src="{% static '/js/components/MainCards.js' %}"></script>
+    <script src="{% static '/js/components/MyFollow.js' %}"></script>
+    <script src="{% static '/js/components/Subscribe.js' %}"></script>
+    <script src="{% static '/js/components/Header.js' %}"></script>
+    <script src="{% static 'js/api/Api.js' %}"></script>
+    <script src="{% static 'js/project/myFollow.js' %}"></script>
+
+    {% endblock %}

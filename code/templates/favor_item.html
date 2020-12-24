@@ -1,0 +1,29 @@
+{% load recipe_filters %}
+<div class="card" data-id="{{ recipe.id }}">
+    <a href="{% url 'recipe_view' recipe.author.username recipe.slug %}" class="link" target="_blank">
+        {% load thumbnail %}
+        {% thumbnail recipe.image "x240" crop="center" as im %}
+        <img src="{{ im.url }}" alt="{{ recipe.title }}" class="card__image">
+        {% endthumbnail %}
+    </a>
+    <div class="card__body">
+        <a class="card__title link" href="{% url 'recipe_view' recipe.author.username recipe.slug %}" target="_blank">{{ recipe.title }}</a>
+        <ul class="card__items">
+            {% for tag in recipe.tag.all %}
+            <li class="card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.title }}</span></li>
+            {% endfor %}
+        </ul>
+        <div class="card__items card__items_column">
+            <p class="card__text"><span class="icon-time"></span> {{recipe.cooking_time}} {{recipe.unit_of_time.reduction}}</p>
+            <p class="card__text"><span class="icon-user"></span> {{ recipe.author.get_full_name }}</p>
+        </div>
+    </div>
+    <div class="card__footer">
+        {% if recipe|is_shopping:user %}
+        <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span>Рецепт добавлен</button>
+        {% else %}
+        <button class="button button_style_light-blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
+        {% endif %}
+        <button class="button button_style_none" name="favorites"><span class="icon-favorite icon-favorite_active"></span></button>
+    </div>
+</div>
