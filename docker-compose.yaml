@@ -7,19 +7,19 @@ services:
     expose:
       - 5432  
     env_file:
-      - ./app/.env
+      - ./code/.env
 
-  foodgram:
+  project:
     build: .
     expose:
-      - 8010
+      - 8000
     depends_on:
       - db
     env_file:
-      - ./app/.env
+      - ./code/.env
     volumes:
-      - ./code/app/static
-      - ./code/app/media
+      - ./app/static
+      - ./app/media
 
   nginx:
     restart: always
@@ -28,10 +28,10 @@ services:
       - 8000:80
     volumes:
       - ./nginx/sites-enabled:/etc/nginx/sites-enabled
-      - ./code/app/static
-      - ./code/app/media
+      - ./app/static
+      - ./app/media
     depends_on:
-      - foodgram
+      - edadel
 
 volumes:
   postgres_data:
