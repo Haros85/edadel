@@ -1,8 +1,10 @@
 import json
-from django.shortcuts import redirect, render, get_object_or_404
+
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
-from recipe.models import Recipe, Ingredient, AmountIngredients, User, Follow, Favorites, Shopping
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from recipe.models import (AmountIngredients, Favorites, Follow, Ingredient,
+                           Recipe, Shopping, User)
 
 
 def get_ingredients(request):
@@ -23,7 +25,7 @@ def follow(request):
 
 @login_required
 def unfollow(request, follow_pk):
-    deleted = Follow.objects.get(user_id=request.user.id, author_id=follow_pk)
+    deleted = Follow.objects.filter(user_id=request.user.id, author_id=follow_pk)
     deleted.delete()
     return JsonResponse({'success': True}) if deleted else JsonResponse({'success': False})
 

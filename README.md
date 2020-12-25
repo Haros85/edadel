@@ -21,7 +21,7 @@ DB_PORT=5432
 **Настройки Nginx находятся в `nginx/conf.d/local.conf`**
 
 # Создание docker контейнера
-запуск проекта выполняется командой `docker-compose up`
+запуск проекта выполняется командой `docker-compose up --build -d`
 
 # Миграции и создание суперпользователя
  - открываем терминал `docker-compose exec project bash`

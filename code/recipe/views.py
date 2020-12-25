@@ -1,23 +1,15 @@
-from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+import os
+from pathlib import Path
 
-from .models import (
-    Recipe,
-    Ingredient,
-    AmountIngredients,
-    Time,
-    Keyword,
-    User,
-    Follow,
-    Shopping,
-)
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import RecipeForm
+from .models import (AmountIngredients, Follow, Ingredient, Keyword, Recipe,
+                     Shopping, Time, User)
 from .utils import get_ingredients_list, get_tags_for_edit
-from pathlib import Path
-import os
 
 
 def index(request):

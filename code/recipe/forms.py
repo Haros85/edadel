@@ -1,4 +1,4 @@
-from django.forms import ModelForm, CheckboxSelectMultiple
+from django.forms import CheckboxSelectMultiple, ModelForm
 from recipe.models import Recipe
 
 

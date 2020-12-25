@@ -13,15 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include
-from django.contrib.flatpages import views
-from django.views.generic import RedirectView
-
 from django.conf import settings
-from django.conf.urls.static import static
 from django.conf.urls import handler404, handler500
-
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.contrib.flatpages import views
+from django.urls import include, path
+from django.views.generic import RedirectView
 
 handler404 = "snot.views.page_not_found" # noqa
 handler500 = "snot.views.server_error" # noqa
