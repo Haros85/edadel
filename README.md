@@ -24,7 +24,7 @@ DB_PORT=5432
 запуск проекта выполняется командой `docker-compose up`
 
 # Миграции и создание суперпользователя
- - открываем терминал `docker-compose exec foodgram bash`
+ - открываем терминал `docker-compose exec project bash`
  - миграция `python manage.py migrate`
  - создание администратора `python manage.py createsuperuser`
 

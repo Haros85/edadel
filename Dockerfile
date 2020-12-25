@@ -1,11 +1,14 @@
 FROM python:3.8
 
-WORKDIR /app
+RUN mkdir /code
 
-COPY ./requirements.txt /app
-RUN pip install -r /app/requirements.txt
-COPY ./code /app
+WORKDIR /code
 
-EXPOSE 8000
+COPY ./code /code
+COPY ./fixtures /code
 
-CMD ["gunicorn", "--chdir", "foodgram", "--bind", ":8000", "foodgram.wsgi:application"]
+RUN pip install --upgrade pip
+RUN pip install -r /code/requirements.txt
+RUN pip install -r /code/requirements.in
+
+RUN python manage.py collectstatic --noinput
