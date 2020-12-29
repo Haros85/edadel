@@ -27,17 +27,6 @@
             </div>
         </div>
         <div class="form__group">
-            <label for="{{ form.title.id_for_label }}" class="form__label">Ссылка</label>
-            <div class="form__field-group">
-                {{ form.slug|addclass:"form__input" }}
-                {% if form.errors %}
-                    {% for error in form.slug.errors %}
-                        <span class="form__error">{{ error|escape }}</span>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-        <div class="form__group">
             <p class="form__label">Теги</p>
             <div class="form__field-group">
                 <div class="tags">

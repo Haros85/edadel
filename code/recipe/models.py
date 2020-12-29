@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from slugify import slugify
 
 User = get_user_model()
 
@@ -74,6 +75,15 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        """
+        Slugify name if it doesn't exist. IMPORTANT: doesn't check to see
+        if slug is a dupe!
+        """
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super(Recipe, self).save(*args, **kwargs)
 
 
 class AmountIngredients(models.Model):

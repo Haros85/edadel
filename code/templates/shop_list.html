@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Список покупок{% endblock %}
 {% load static %}
+{% load recipe_filters %}
 {% block static %}
 <link rel="stylesheet" href="{% static 'pages/shopList.css' %}">
 {% endblock %}
@@ -26,7 +27,9 @@
             {% endfor %}
         </ul>
     </div>
+    {% if page %}
     <p style="padding: 0 0 2em 0;"><a href="{% url 'download' %}"><button class="button button_style_blue">Скачать список</button></a></p>
+    {% endif %}
 <script src="{% static 'js/config/config.js' %}"></script>
 <script src="{% static 'js/components/Header.js' %}"></script>
 <script src="{% static 'js/components/ShopList.js' %}"></script>

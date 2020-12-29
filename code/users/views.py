@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect, render
 from django.views.generic import CreateView
 
 from .forms import CreationForm, EditProfile
@@ -8,13 +8,20 @@ from .forms import CreationForm, EditProfile
 
 class SignUp(CreateView):
     form_class = CreationForm
-    success_url = reverse_lazy("signup")
-    template_name = "signup.html"
+    success_url = '/auth/login/'
+    template_name = 'signup.html'
 
-    def form_valid(self, form):
-        email = form.cleaned_data['email']
-        return super().form_valid(form)
-
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            user = form.save()
+            user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+            )
+            login(request, user)
+            return redirect('index')
+        return render(request, 'signup.html', {'form': form})
 
 @login_required
 def edit_profile(request):

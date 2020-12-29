@@ -12,6 +12,7 @@
             <div class="single-card__info">
                 <div class="single-card__header-info">
                     <h1 class="single-card__title"> {{ recipe.title }} </h1>
+                    {% if user.is_authenticated %}
                     <div class="single-card__favorite">
                         {% if recipe|is_favorite:user %}
                         <button class="button button_style_none" name="favorites"><span class="icon-favorite icon-favorite_active"></span></button>
@@ -19,6 +20,7 @@
                         <button class="button button_style_none" name="favorites" data-out><span class="icon-favorite"></span></button>
                         {% endif %}
                     </div>
+                    {% endif %}
                 </div>
                 <ul class="single-card__items">
                     {% for tag in recipe.tag.all %}
@@ -40,9 +42,8 @@
                         {% endif %}
                     </ul>
                 </div>
-                {% if request.user.is_authenticated %}
+                {% if user.is_authenticated %}
                 <ul class="single-card__items">
-    
                     <li class="single-card__item">
                         {% if recipe|is_shopping:user %}
                         <button class="button button_style_light-blue-outline" name="purchases"><span class="icon-check button__icon"></span>Рецепт добавлен</button>
@@ -50,7 +51,7 @@
                         <button class="button button_style_blue" name="purchases" data-out><span class="icon-plus button__icon"></span>Добавить в покупки</button>
                         {% endif %}
                     </li>
-                    {% ifnotequal request.user.username recipe.author.username %}
+                    {% ifnotequal user.username recipe.author.username %}
                     <li class="single-card__item">
                         {% if recipe.author|is_follow:user%}
                         <button class="button button_style_light-blue" name="subscribe">Отписаться от автора</button>
@@ -66,22 +67,21 @@
                     <div class="single-card__items single-card__items_column">
                         {% for ing in recipe.amountingredients_set.all %}
                         {% if ing.amount != 0 %}
-                        <p class=" single-card__section-item">{{ ing.ingredient.title }} - {{ ing.amount }} {{ ing.ingredient.unit }}</p>
+                        <p class="single-card__section-item">{{ ing.ingredient.title }} - {{ ing.amount }} {{ ing.ingredient.unit }}</p>
                         {% else %}
-                        <p class=" single-card__section-item">{{ ing.ingredient.title }} - по вкусу</p>
+                        <p class="single-card__section-item">{{ ing.ingredient.title }} - по вкусу</p>
                         {% endif %}
                         {% endfor %}
                     </div>
                 </div>
                 <div class="single-card__section">
                     <h3 class="single-card__section-title">Описание:</h3>
-                    <p class=" single-card__section-text">{{ recipe.description }}</p>
+                    <p class="single-card__section-text">{{ recipe.description }}</p>
                 </div>
             </div>
         </div>
     <script src="{% static 'js/config/config.js' %}"></script>
     <script src="{% static 'js/api/Api.js' %}"></script>
-
     <script src="{% static 'js/components/Purchases.js' %}"></script>
     <script src="{% static 'js/components/MainCards.js' %}"></script>
     <script src="{% static 'js/components/SingleCard.js' %}"></script>
@@ -93,4 +93,4 @@
     {% else %}
     <script src="{% static 'js/project/singlePageNotAuth.js' %}"></script>
     {% endif %}
-    {% endblock %}
+{% endblock %}

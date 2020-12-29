@@ -22,6 +22,7 @@
                 {% endfor %}
             </ul>
         </div>
+        {% if user.is_authenticated %}
         <div class="author-subscribe" data-author="{{ profile.pk }}">
             <p style="padding: 0 0 2em 0;">
             {% ifnotequal request.user.username profile.username %}
@@ -33,6 +34,7 @@
             {% endifnotequal %}
             </p>
         </div>
+        {% endif %}
         <div class="card-list">
             {% for recipe in page %}
             {% include 'recipe_item.html' %}
