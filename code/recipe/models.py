@@ -81,8 +81,9 @@ class Recipe(models.Model):
         Slugify name if it doesn't exist. IMPORTANT: doesn't check to see
         if slug is a dupe!
         """
+        numb = Recipe.objects.count()+1
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = f"{numb}-{slugify(self.title)}"
         super(Recipe, self).save(*args, **kwargs)
 
 
